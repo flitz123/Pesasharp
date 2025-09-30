@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // or "mysql" / "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id        String      @id @default(cuid())
+  title     String
+  desc      String
+  price     Int
+  type      String
+  createdAt DateTime    @default(now())
+  purchases Purchase[]
+}
+
+model Purchase {
+  id        String   @id @default(cuid())
+  product   String   // foreign key
+  phone     String
+  amount    Int
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+
+  productRef Product @relation(fields: [product], references: [id])
+}
