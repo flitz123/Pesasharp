@@ -12,11 +12,14 @@ export async function GET(req: Request) {
         if (!playlistId || !key) {
             // fallback mock
             return NextResponse.json({
-                items: [{ id: 'dQw4w9WgXcQ', title: 'PesaPlan: Intro to Investing' }],
+                items: [
+                    { id: 'dQw4w9WgXcQ', title: 'PesaPlan: Intro to Investing' },
+                    { id: 'abcd1234', title: 'Saving Money in Kenya 101' },
+                ],
             });
         }
 
-        const api = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=10&playlistId=${playlistId}&key=${key}`;
+        const api = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=25&playlistId=${playlistId}&key=${key}`;
         const r = await fetch(api);
         const j = await r.json();
 
