@@ -58,8 +58,4 @@ const BlogPage: React.FC = () => {
 };
 
 export default BlogPage;
-        ))}
-      </ul>
-    </div>
-  );
-}
+
