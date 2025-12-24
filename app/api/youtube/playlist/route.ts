@@ -6,7 +6,7 @@ export async function GET(req: Request) {
         const playlistId =
             searchParams.get('playlistId') ||
             process.env.NEXT_PUBLIC_YT_PLAYLIST_ID ||
-            '';
+            'PLwarXDNlUyjJ4R_gaIF_ado0gZ0Undk_M';
         const key = process.env.YOUTUBE_API_KEY || '';
 
         if (!playlistId || !key) {
