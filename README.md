@@ -6,4 +6,4 @@ Quick start:
 4. npx prisma migrate dev --name init
 5. npm run seed
 6. npm run dev
-If you hit errors, paste the terminal output here and I'll patch them.
+
