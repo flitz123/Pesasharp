@@ -1,39 +1,42 @@
-"use client";
-import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import fs from 'fs';
+import path from 'path';
 
-interface Post {
-  id: string;
-  title: string;
-  createdAt: string;
-}
+const BlogPage = () => {
+  const posts = [];
 
-const BlogPage: React.FC = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Get posts from app/blog
+  const blogDirectory = path.join(process.cwd(), 'app', 'blog');
+  const blogFilenames = fs.readdirSync(blogDirectory);
+  blogFilenames
+    .filter(filename => filename.endsWith('.md'))
+    .forEach(filename => {
+        const filePath = path.join(blogDirectory, filename);
+        const fileContents = fs.readFileSync(filePath, 'utf8');
+        const titleLine = fileContents.split('\n')[0];
+        const title = titleLine ? titleLine.replace(/#+\s*/, '').replace(/📘/g, '').trim() : 'Untitled Post';
+        const id = filename.replace('.md', '');
+        posts.push({ id, title, createdAt: fs.statSync(filePath).ctime.toISOString() });
+    });
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await fetch('/api/admin/posts');
-        if (!res.ok) {
-          throw new Error('Failed to fetch posts');
-        }
-        const data = await res.json();
-        setPosts(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    // Get post from app/admin
+    const adminDirectory = path.join(process.cwd(), 'app', 'admin');
+    try {
+        const adminFilenames = fs.readdirSync(adminDirectory);
+        adminFilenames
+        .filter(filename => filename === 'Posts.md')
+        .forEach(filename => {
+            const filePath = path.join(adminDirectory, filename);
+            const fileContents = fs.readFileSync(filePath, 'utf8');
+            const titleLine = fileContents.split('\n')[0];
+            const title = titleLine ? titleLine.replace(/#+\s*/, '').replace(/📘/g, '').trim() : 'Untitled Post';
+            const id = filename.replace('.md', '');
+            posts.push({ id, title, createdAt: fs.statSync(filePath).ctime.toISOString() });
+        });
+    } catch (error) {
+        // Suppress error if admin directory doesn't exist
+    }
 
-    fetchPosts();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -58,4 +61,3 @@ const BlogPage: React.FC = () => {
 };
 
 export default BlogPage;
-

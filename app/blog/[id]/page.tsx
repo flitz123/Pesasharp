@@ -1,52 +1,38 @@
-import prisma from "@/lib/prisma";
+
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import fs from 'fs';
+import path from 'path';
+import remarkGfm from 'remark-gfm';
 
 export default async function BlogPost({ params }: { params: { id: string } }) {
-  const post = await prisma.post.findUnique({
-    where: { id: params.id },
-  });
+  const { id } = params;
+  let filePath;
+  if (id === 'Posts') {
+    filePath = path.join(process.cwd(), 'app', 'admin', 'Posts.md');
+  } else {
+    filePath = path.join(process.cwd(), 'app', 'blog', `${id}.md`);
+  }
 
-  if (!post) return notFound();
+  if (!fs.existsSync(filePath)) {
+    return notFound();
+  }
+
+  const fileContents = fs.readFileSync(filePath, 'utf8');
+  const titleLine = fileContents.split('\n')[0];
+  const title = titleLine ? titleLine.replace(/#+\s*/, '').replace(/📘/g, '').trim() : 'Untitled Post';
+  const createdAt = fs.statSync(filePath).ctime;
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">{post.title}</h1>
+      <h1 className="text-2xl font-bold">{title}</h1>
       <p className="text-sm text-gray-600">
-        {new Date(post.createdAt).toLocaleDateString()}
+        {new Date(createdAt).toLocaleDateString()}
       </p>
 
       <article className="prose max-w-none">
-        <ReactMarkdown>{post.content}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{fileContents}</ReactMarkdown>
       </article>
-
-      <hr className="my-4" />
-
-      {/* Example: Embedded social posts */}
-      <div className="space-y-4">
-        <h2 className="font-semibold text-lg">Related Social Posts</h2>
-
-        {/* Example embeds */}
-        <blockquote className="twitter-tweet">
-          <a href="https://twitter.com/PesaPlanKE/status/1234567890">
-            Loading Tweet…
-          </a>
-        </blockquote>
-
-        <iframe
-          src="https://www.instagram.com/p/Cxyz123/embed"
-          className="w-full rounded"
-          height="500"
-          allowTransparency
-        ></iframe>
-
-        <iframe
-          src="https://www.threads.net/embed/post/Cxyz456"
-          className="w-full rounded"
-          height="500"
-          allowTransparency
-        ></iframe>
-      </div>
     </div>
   );
 }
