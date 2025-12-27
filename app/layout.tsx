@@ -1,4 +1,4 @@
-import "./globals.css";
+import "@/styles/global.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -9,7 +9,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
+      <body 
+        className="bg-gray-50 text-gray-900 flex flex-col min-h-screen"
+        style={{ backgroundImage: "url(/assets/Background.png)" }}
+      >
         <Header />
         <main className="flex-1 max-w-6xl mx-auto p-6">{children}</main>
         <Footer />

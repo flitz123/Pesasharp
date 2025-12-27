@@ -34,6 +34,12 @@ export default function Home() {
         >
           💻 Digital Products
         </Link>
+        <Link
+          href="/blog"
+          className="p-6 bg-white rounded shadow hover:bg-gray-50"
+        >
+          ✍️ Blog
+        </Link>
       </div>
     </div>
   );
