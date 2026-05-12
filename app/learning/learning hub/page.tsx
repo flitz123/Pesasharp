@@ -20,7 +20,7 @@ const pdfMap: Record<
       "Includes step-by-step beginner’s path and pro best practices.",
     ],
     related: [
-      { name: "Investment Analyzer", href: "/tools/investment-analyzer" },
+      { name: "Investment Analyzer", href: "/tools/investments" },
       { name: "Savings Goal Tracker", href: "/tools/savings" },
     ],
   },
@@ -60,7 +60,7 @@ const pdfMap: Record<
     ],
     related: [
       { name: "Budget Planner", href: "/tools/budget" },
-      { name: "Investment Analyzer", href: "/tools/investment-analyzer" },
+      { name: "Investment Analyzer", href: "/tools/investments" },
     ],
   },
 };

@@ -65,7 +65,7 @@ export default function InvestmentAnalyzer() {
 
           <a
             className="inline-block mt-3 text-brand underline"
-            href="/api/affiliate/broker"
+            href="https://ken.en.fxpesa.finance/"
           >
             Open a low-fee account ↗
           </a>

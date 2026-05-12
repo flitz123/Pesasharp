@@ -1,9 +1,9 @@
 export default function AboutPage() {
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">About PesaPlan</h1>
+      <h1 className="text-2xl font-bold">About PesaSharp</h1>
       <p>
-        PesaPlan is a financial education and planning platform designed to help
+        PesaSharp is a financial education and planning platform designed to help
         Kenyans learn, save, invest, and make smarter money decisions.
       </p>
       <p>
@@ -17,4 +17,3 @@ export default function AboutPage() {
     </div>
   );
 }
-

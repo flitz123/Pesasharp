@@ -5,7 +5,7 @@ export default function Header() {
     <header className="bg-brand text-white shadow">
       <div className="max-w-6xl mx-auto flex justify-between items-center p-4">
         <Link href="/" className="text-xl font-bold">
-          PesaPlan
+          PesaSharp
         </Link>
         <nav className="space-x-4 text-sm font-medium">
           <Link href="/learning" className="hover:underline">
